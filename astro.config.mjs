@@ -160,8 +160,11 @@ export default defineConfig({
 			smoothScrolling: false,
 			cache: true,
 			preload: {
+				// hover 预取保留（鼠标悬停时才预取，命中率高）
 				hover: true,
-				visible: true,
+				// 关闭「可见即预取」：首页卡片底部标签会让所有可见链接被预取，
+				// 产生大量 /archive/?tag=… 请求。关掉可显著减少无用预取。
+				visible: false,
 			},
 			accessibility: true,
 			updateHead: true,
