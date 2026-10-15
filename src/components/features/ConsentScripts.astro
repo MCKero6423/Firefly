@@ -82,6 +82,24 @@
 			}
 		}
 
+		// astro-consent 的弹窗勾选状态在脚本加载时就固定，横幅的「拒绝/允许」不会同步给它，
+		// 导致先点横幅再打开「管理偏好」时仍显示旧状态。这里在弹窗出现时按已存同意同步。
+		function syncModal() {
+			const modal = document.getElementById("astro-consent-modal");
+			if (!modal) return;
+			const stored = window.astroConsent && window.astroConsent.get();
+			const cats = stored && stored.categories ? stored.categories : null;
+			for (const t of modal.querySelectorAll(".cb-toggle")) {
+				const key = t.getAttribute("data-key");
+				// 没有已存记录时（首次直接点「管理偏好」）保持默认开启
+				const desired = cats ? !!cats[key] : true;
+				if ((t.getAttribute("aria-pressed") === "true") !== desired) {
+					// 走 click 以便同步 astro-consent 内部 state，之后点「全部允许」才会写对
+					t.click();
+				}
+			}
+		}
+
 		function init() {
 			if (!window.astroConsent) {
 				setTimeout(init, 300);
@@ -105,6 +123,7 @@
 				requestAnimationFrame(() => {
 					scheduled = false;
 					localize();
+					syncModal();
 				});
 			};
 
