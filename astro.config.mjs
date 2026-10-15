@@ -135,11 +135,6 @@ export default defineConfig({
       consent: {
         days: 180,
         storageKey: "mc-kero-consent"
-      },
-      categories: {
-        essential: true,
-        analytics: true,
-        marketing: false
       }
     }),
     // astro-consent:end
