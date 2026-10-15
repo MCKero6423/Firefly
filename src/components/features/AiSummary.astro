@@ -1,0 +1,95 @@
+---
+// 洪墨 / 天利 GPT 智能摘要
+// 该脚本属第三方（ai.zhheo.com），归入 astro-consent 的 analytics 类别：
+// 只有用户同意后才会加载，并适配 Swup 切页。
+---
+
+<div class="hongmo-ai-container mt-4" id="hongmo-ai-container"></div>
+
+<script is:inline>
+	(function () {
+		let loaded = false;
+
+		function allowed() {
+			try {
+				const c = window.astroConsent && window.astroConsent.get();
+				return !!(c && c.categories && c.categories.analytics);
+			} catch {
+				return false;
+			}
+		}
+
+		function ensureCss() {
+			if (document.querySelector("link[data-tianli-gpt-css]")) return;
+			const css = document.createElement("link");
+			css.rel = "stylesheet";
+			css.href = "https://ai.zhheo.com/static/public/tianli_gpt.min.css";
+			css.setAttribute("data-tianli-gpt-css", "");
+			document.head.appendChild(css);
+		}
+
+		function run() {
+			if (
+				window.tianliGPT &&
+				typeof window.tianliGPT.checkURLAndRun === "function" &&
+				document.querySelector(".markdown-content")
+			) {
+				const old = document.querySelector("#tianliGPT");
+				if (old) old.remove();
+				window.tianliGPT.checkURLAndRun();
+			}
+		}
+
+		function load() {
+			if (!allowed()) return;
+			ensureCss();
+
+			window.tianliGPT_postSelector = ".markdown-content";
+			window.tianliGPT_postURL = "*/posts/*";
+			window.tianliGPT_wordLimit = 700;
+			window.tianliGPT_Title = "智能摘要";
+			window.tianliGPT_key = "S-HMJ7UXQGBIAZ0U8Q";
+
+			if (loaded) {
+				run();
+				return;
+			}
+			loaded = true;
+
+			if (!window.__tianliLoaded) {
+				window.__tianliLoaded = true;
+				const s = document.createElement("script");
+				s.async = true;
+				s.src = "https://ai.zhheo.com/static/public/tianli_gpt.min.js";
+				s.onload = () => setTimeout(run, 300);
+				document.body.appendChild(s);
+			} else {
+				setTimeout(run, 300);
+			}
+		}
+
+		// 等待 astro-consent 就绪；未同意则轮询，同意后立即加载
+		let tries = 0;
+		(function wait() {
+			if (window.astroConsent) {
+				load();
+				if (!loaded && tries++ < 600) setTimeout(wait, 1000);
+			} else if (tries++ < 600) {
+				setTimeout(wait, 300);
+			}
+		})();
+
+		// Swup 切页后重新生成摘要
+		if (!window.__tianliSwupHooked) {
+			window.__tianliSwupHooked = true;
+			const bind = (swup) => {
+				if (swup && swup.hooks) {
+					swup.hooks.on("content:replace", () => setTimeout(load, 400));
+				}
+			};
+			if (window.swup) bind(window.swup);
+			else
+				document.addEventListener("swup:enable", () => bind(window.swup));
+		}
+	})();
+</script>

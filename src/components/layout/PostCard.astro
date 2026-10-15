@@ -181,6 +181,12 @@ const minutes = remarkPluginFrontmatter.minutes;
           bottomTagsAsText ? "gap-x-3 gap-y-1" : "gap-1.5",
         ]}
       >
+        <span
+          class="shrink-0 mr-0.5 text-(--content-meta)"
+          aria-hidden="true"
+        >
+          <Icon name="material-symbols:tag-rounded" class="text-sm" />
+        </span>
         {bottomTags.map((tag) => (
           <a
             href={getTagUrl(tag)}
