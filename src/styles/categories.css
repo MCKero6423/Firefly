@@ -10,7 +10,7 @@
 .category-pill .pill-count {
   font-size: 0.7rem;
   font-weight: 600;
-  opacity: 0.5;
+  opacity: 0.8;
   padding: 0.05rem 0.35rem;
   border-radius: 9999px;
   background: color-mix(in srgb, var(--btn-content) 10%, transparent);
@@ -26,11 +26,11 @@
 }
 .category-pill[data-active] {
   background: var(--primary);
-  color: white;
+  color: var(--card-bg);
   border-color: transparent;
 }
 .category-pill[data-active] .pill-count {
-  background: rgba(255, 255, 255, 0.2);
+  background: color-mix(in srgb, var(--card-bg) 22%, transparent);
   opacity: 0.9;
 }
 .category-pill[data-soft-active] {
@@ -53,7 +53,7 @@
 }
 .category-pill[data-category-name=""][data-active],
 .category-pill[data-category-name=""][data-active]:hover {
-  color: white;
+  color: var(--card-bg);
 }
 
 /* 矩形样式（siteConfig.categoryStyle = "rectangle"）- 只收小圆角，配色沿用上方胶囊样式 */

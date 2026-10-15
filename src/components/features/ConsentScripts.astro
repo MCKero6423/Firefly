@@ -116,30 +116,28 @@
 				};
 			};
 
-			let scheduled = false;
-			const scheduleLocalize = () => {
-				if (scheduled) return;
-				scheduled = true;
-				requestAnimationFrame(() => {
-					scheduled = false;
-					localize();
-					syncModal();
-				});
-			};
-
 			wrapSet();
 			apply();
 
-			const observer = new MutationObserver(scheduleLocalize);
-			observer.observe(document.body, { childList: true, subtree: true });
-			scheduleLocalize();
-
-			// 兜底：体积小、代价低。覆盖 astroConsent 被重建、或在别处触发同意的情况。
-			const timer = setInterval(() => {
+			// 轻量轮询替代「全页 MutationObserver」：仅在横幅/弹窗存在时做本地化与勾选同步，
+			// 避免首屏大量 DOM 变更时反复查询造成的长任务与强制重排。
+			let ticks = 0;
+			const poll = setInterval(() => {
 				wrapSet();
-				apply();
-				if (loaded) clearInterval(timer);
-			}, 2000);
+				if (!loaded) apply();
+
+				const banner = document.getElementById("astro-consent-banner");
+				const modal = document.getElementById("astro-consent-modal");
+				if (banner || modal) {
+					localize();
+					syncModal();
+				}
+
+				const decided = !!window.astroConsent.get();
+				if (ticks++ > 240 || (decided && !banner && !modal)) {
+					clearInterval(poll);
+				}
+			}, 500);
 		}
 
 		init();

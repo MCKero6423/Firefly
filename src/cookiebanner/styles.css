@@ -474,4 +474,9 @@
   color: var(--cb-accent);
 }
 
+/* 暗色下 --primary 偏亮，主按钮改用深色文字以保证对比度 */
+:root.dark {
+  --cb-button-text: rgba(0, 0, 0, 0.72);
+}
+
 

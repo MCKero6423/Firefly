@@ -7,7 +7,7 @@ export const profileConfig: ProfileConfig = {
 	// 2. src 目录（不以 "/" 开头，自动优化但会增加构建时间，推荐）："assets/images/avatar.webp"
 	// 3. 远程 URL："https://example.com/avatar.jpg"
 	avatar:
-		"https://i0.hdslb.com/bfs/face/96a6399dffe9e203d3afcc83fe5af3377830fa19.png@256w_256h_1c.webp",
+		"https://img.mckero.com/cdn-cgi/image/width=256,format=auto,quality=80/touxiang/mmexport1765550267253.jpg",
 
 	// 名字
 	name: "MC_Kero",
