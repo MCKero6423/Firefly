@@ -14,10 +14,10 @@
 .category-pill .pill-count {
   font-size: 0.7rem;
   font-weight: 600;
-  opacity: 0.9;
   padding: 0.05rem 0.35rem;
   border-radius: 9999px;
-  background: color-mix(in srgb, currentColor 14%, transparent);
+  /* 不再用 opacity / currentColor 底色：那会把文字与底色拉近，导致对比度不达标 */
+  background: color-mix(in srgb, var(--card-bg) 30%, transparent);
 }
 .category-pill[data-category-name=""] {
   color: var(--deep-text);
