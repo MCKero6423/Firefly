@@ -1,0 +1,99 @@
+/* ============================================================================
+   本站定制覆盖 —— 所有「改动 Firefly 上游文件」的内容集中在这里
+   目的：同步 Firefly 上游时零冲突。请勿再把定制散落到上游文件里。
+   在 main.css 中于最后引入，保证优先级最高。
+   ============================================================================ */
+
+/* ── 1) 分类 pill 对比度 ──────────────────────────────────────────────────
+   原因：首页卡片半透明叠在壁纸上，pill 文字偏亮 + 底色半透明 → 对比度随壁纸漂移；
+   浅色模式下 --btn-content 在白底不足；pill-count 还叠了 opacity。
+   改法：pill 用不透明底色，文字按明/暗分别取高对比色。 */
+.category-pill {
+  color: var(--deep-text);
+  background: var(--btn-regular-bg);
+}
+:root.dark .category-pill {
+  color: var(--btn-content);
+}
+.category-pill .pill-count {
+  opacity: 1;
+  background: color-mix(in srgb, var(--card-bg) 30%, transparent);
+}
+.category-pill[data-category-name=""] {
+  color: var(--deep-text);
+  background: color-mix(in oklch, var(--primary) 16%, var(--card-bg));
+}
+:root.dark .category-pill[data-category-name=""] {
+  color: var(--btn-content);
+  background: color-mix(in oklch, var(--primary) 22%, var(--card-bg));
+}
+.category-pill:hover {
+  color: var(--deep-text);
+  background: var(--btn-regular-bg-hover);
+}
+:root.dark .category-pill:hover {
+  color: var(--btn-content);
+}
+.category-pill[data-active] {
+  background: var(--primary);
+  color: var(--deep-text);
+}
+.category-pill[data-active] .pill-count {
+  background: color-mix(in srgb, var(--deep-text) 18%, transparent);
+}
+.category-pill[data-soft-active] {
+  background: color-mix(in oklch, var(--primary) 22%, var(--card-bg));
+  color: var(--deep-text);
+}
+:root.dark .category-pill[data-soft-active] {
+  color: var(--btn-content);
+}
+.category-pill[data-soft-active]:hover,
+.category-pill[data-soft-active][data-active],
+.category-pill[data-soft-active][data-active]:hover {
+  background: color-mix(in oklch, var(--primary) 28%, var(--card-bg));
+  color: var(--deep-text);
+}
+:root.dark .category-pill[data-soft-active]:hover,
+:root.dark .category-pill[data-soft-active][data-active],
+:root.dark .category-pill[data-soft-active][data-active]:hover {
+  color: var(--btn-content);
+}
+.category-pill[data-category-name=""][data-active],
+.category-pill[data-category-name=""][data-active]:hover {
+  color: var(--deep-text);
+}
+
+/* ── 2) Cookie 同意横幅/弹窗 主题化（astro-consent） ─────────────────────
+   把横幅颜色接到 Firefly 主题变量；文字按明/暗分别取值。 */
+:root {
+  --cb-font-family: inherit;
+  --cb-bg: var(--card-bg);
+  --cb-surface: var(--btn-regular-bg);
+  --cb-surface-strong: var(--btn-regular-bg);
+  /* 注意：--deep-text 在暗色下仍是深色，用它会「暗底暗字」，故明暗分开取 */
+  --cb-text: rgba(0, 0, 0, 0.88);
+  --cb-muted: var(--content-meta);
+  --cb-border: var(--line-divider);
+  --cb-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+  --cb-backdrop: rgba(0, 0, 0, 0.45);
+  --cb-accent: var(--primary);
+  --cb-accent-strong: var(--primary);
+  --cb-accent-soft: color-mix(in oklch, var(--primary) 18%, transparent);
+  --cb-success: var(--primary);
+  --cb-button-bg: var(--primary);
+  --cb-button-text: #fff;
+  --cb-button-border: transparent;
+  --cb-button-secondary-bg: var(--btn-regular-bg);
+  --cb-button-secondary-text: var(--btn-content);
+  --cb-button-secondary-border: var(--line-divider);
+}
+:root.dark {
+  --cb-text: rgba(255, 255, 255, 0.92);
+  /* 暗色下 --primary 偏亮，主按钮改用深色文字以保证对比度 */
+  --cb-button-text: rgba(0, 0, 0, 0.72);
+}
+.cb-container a,
+.cb-modal a {
+  color: var(--cb-accent);
+}

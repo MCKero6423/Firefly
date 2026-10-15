@@ -2,74 +2,58 @@
 .category-pill {
   border: 1px solid color-mix(in srgb, var(--btn-content) 12%, transparent);
   border-radius: 9999px;
-  /* 不透明底色 + 高对比文字：避免叠在半透明卡片/壁纸上时对比度随壁纸变化 */
-  color: var(--deep-text);
-  background: var(--btn-regular-bg);
+  color: var(--btn-content);
+  background: color-mix(in srgb, var(--btn-content) 6%, transparent);
   font-weight: 500;
   gap: 0.375rem;
-}
-:root.dark .category-pill {
-  color: var(--btn-content);
 }
 .category-pill .pill-count {
   font-size: 0.7rem;
   font-weight: 600;
+  opacity: 0.5;
   padding: 0.05rem 0.35rem;
   border-radius: 9999px;
-  /* 不再用 opacity / currentColor 底色：那会把文字与底色拉近，导致对比度不达标 */
-  background: color-mix(in srgb, var(--card-bg) 30%, transparent);
+  background: color-mix(in srgb, var(--btn-content) 10%, transparent);
 }
 .category-pill[data-category-name=""] {
-  color: var(--deep-text);
-  background: color-mix(in oklch, var(--primary) 16%, var(--card-bg));
-}
-:root.dark .category-pill[data-category-name=""] {
-  color: var(--btn-content);
-  background: color-mix(in oklch, var(--primary) 22%, var(--card-bg));
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
 }
 .category-pill:hover {
-  color: var(--deep-text);
-  background: var(--btn-regular-bg-hover);
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 15%, transparent);
   border-color: color-mix(in srgb, var(--primary) 25%, transparent);
-}
-:root.dark .category-pill:hover {
-  color: var(--btn-content);
 }
 .category-pill[data-active] {
   background: var(--primary);
-  color: var(--deep-text);
+  color: white;
   border-color: transparent;
 }
 .category-pill[data-active] .pill-count {
-  background: color-mix(in srgb, var(--deep-text) 18%, transparent);
-  opacity: 0.95;
+  background: rgba(255, 255, 255, 0.2);
+  opacity: 0.9;
 }
 .category-pill[data-soft-active] {
-  background: color-mix(in oklch, var(--primary) 22%, var(--card-bg));
-  color: var(--deep-text);
+  background: color-mix(in srgb, var(--primary) 18%, transparent);
+  color: color-mix(in srgb, var(--primary) 90%, var(--btn-content));
   font-weight: 600;
 }
-:root.dark .category-pill[data-soft-active] {
-  color: var(--btn-content);
+.category-pill[data-soft-active]:hover {
+  background: color-mix(in srgb, var(--primary) 25%, transparent);
+  color: color-mix(in srgb, var(--primary) 100%, var(--btn-content));
 }
-.category-pill[data-soft-active]:hover,
 .category-pill[data-soft-active][data-active],
 .category-pill[data-soft-active][data-active]:hover {
-  background: color-mix(in oklch, var(--primary) 28%, var(--card-bg));
-  color: var(--deep-text);
-}
-:root.dark .category-pill[data-soft-active]:hover,
-:root.dark .category-pill[data-soft-active][data-active],
-:root.dark .category-pill[data-soft-active][data-active]:hover {
-  color: var(--btn-content);
+  background: color-mix(in srgb, var(--primary) 25%, transparent);
+  color: color-mix(in srgb, var(--primary) 100%, var(--btn-content));
 }
 .category-pill[data-active]:hover {
   background: var(--primary);
-  opacity: 0.95;
+  opacity: 0.9;
 }
 .category-pill[data-category-name=""][data-active],
 .category-pill[data-category-name=""][data-active]:hover {
-  color: var(--deep-text);
+  color: white;
 }
 
 /* 矩形样式（siteConfig.categoryStyle = "rectangle"）- 只收小圆角，配色沿用上方胶囊样式 */
