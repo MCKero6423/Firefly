@@ -74,6 +74,11 @@ export default defineConfig({
 	base: "/",
 	trailingSlash: "always",
 
+	// 将 CSS 内嵌进 HTML，消除移动端（慢速 4G）上代价很高的渲染阻塞 CSS 请求
+	build: {
+		inlineStylesheets: "always",
+	},
+
 	// 字体配置 - 只加载实际使用的字体，跳过未引用的以加快构建
 	fonts: (() => {
 		// 禁用字体功能时直接返回空数组，跳过 Astro Font API 集成
