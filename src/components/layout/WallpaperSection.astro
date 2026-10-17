@@ -38,9 +38,11 @@ const wallpaperPosition = state.isFullscreenMode
          data-carousel-interval={state.bannerCarouselInterval}
          data-carousel-effect={state.bannerCarouselEffect}>
         {/* 图片放在 <template> 里，浏览器不会发起请求；由轮播脚本挑中随机那张后克隆进 DOM */}
+        {/* 首张（LCP 元素）直接渲染进 DOM 并标记 high，让浏览器在解析 HTML 时就能发现并请求，
+            不必等轮播脚本执行后才从 <template> 克隆；其余仍延迟到脚本挑选时再实例化。 */}
         {backgroundImages.mobile.map((src, index) => (
             <div class:list={["slide-item block lg:hidden", index === 0 && "active"]} data-index={index}>
-                <template>
+                {index === 0 ? (
                     <ImageWrapper
                         alt="Mobile background image of the blog"
                         class="object-cover h-full w-full"
@@ -50,14 +52,30 @@ const wallpaperPosition = state.isFullscreenMode
                         widths={[640, 720, 828]}
                         sizes="100vw"
                         loading="eager"
+                        fetchpriority="high"
+                        fadeIn={false}
                         quality={state.mobileQuality}
                     />
-                </template>
+                ) : (
+                    <template>
+                        <ImageWrapper
+                            alt="Mobile background image of the blog"
+                            class="object-cover h-full w-full"
+                            src={src}
+                            position={wallpaperPosition}
+                            width={828}
+                            widths={[640, 720, 828]}
+                            sizes="100vw"
+                            loading="eager"
+                            quality={state.mobileQuality}
+                        />
+                    </template>
+                )}
             </div>
         ))}
         {backgroundImages.desktop.map((src, index) => (
             <div class:list={["slide-item hidden lg:block", index === 0 && "active"]} data-index={index}>
-                <template>
+                {index === 0 ? (
                     <ImageWrapper
                         alt="Desktop background image of the blog"
                         class="object-cover h-full"
@@ -67,9 +85,25 @@ const wallpaperPosition = state.isFullscreenMode
                         widths={[1280, 1440, 1600, 1920]}
                         sizes="100vw"
                         loading="eager"
+                        fetchpriority="high"
+                        fadeIn={false}
                         quality={state.configQuality}
                     />
-                </template>
+                ) : (
+                    <template>
+                        <ImageWrapper
+                            alt="Desktop background image of the blog"
+                            class="object-cover h-full"
+                            src={src}
+                            position={wallpaperPosition}
+                            width={1920}
+                            widths={[1280, 1440, 1600, 1920]}
+                            sizes="100vw"
+                            loading="eager"
+                            quality={state.configQuality}
+                        />
+                    </template>
+                )}
             </div>
         ))}
         <noscript>
