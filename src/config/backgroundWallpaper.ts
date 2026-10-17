@@ -38,8 +38,8 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 	src: {
 		// 桌面背景图片（支持单张或多张随机）
 		desktop: "assets/images/DesktopWallpaper/mumbles.avif",
-		// 移动背景图片（支持单张或多张随机）
-		mobile: "assets/images/MobileWallpaper/mumbles.avif",
+		// 移动背景图片：留空数组表示移动端不显示壁纸（纯色背景，省掉 LCP 大图）
+		mobile: [],
 		// 背景视频播放地址
 		// 支持单个视频路径（字符串）或多个视频循环（数组，参考上面壁纸配置）
 		// 支持远程视频URL，本地视频请放在 public/assets/videos/ 目录下

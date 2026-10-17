@@ -30,9 +30,15 @@ export const getBackgroundImages = (): BackgroundImages => {
 		};
 		const desktopImages = toArray(srcObj.desktop);
 		const mobileImages = toArray(srcObj.mobile);
+		// mobile 显式配置为空数组时，表示移动端不要壁纸，此时不回退到桌面图
+		const mobileDisabled = Array.isArray(srcObj.mobile) && srcObj.mobile.length === 0;
 		return {
 			desktop: desktopImages.length > 0 ? desktopImages : mobileImages,
-			mobile: mobileImages.length > 0 ? mobileImages : desktopImages,
+			mobile: mobileDisabled
+				? []
+				: mobileImages.length > 0
+					? mobileImages
+					: desktopImages,
 			isMultiple: desktopImages.length > 1 || mobileImages.length > 1,
 		};
 	}
