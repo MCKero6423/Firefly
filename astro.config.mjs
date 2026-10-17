@@ -74,10 +74,8 @@ export default defineConfig({
 	base: "/",
 	trailingSlash: "always",
 
-	// 将 CSS 内嵌进 HTML，消除移动端（慢速 4G）上代价很高的渲染阻塞 CSS 请求
-	build: {
-		inlineStylesheets: "always",
-	},
+	// CSS 保持外链：inlineStylesheets:"always" 会让每页 HTML 内嵌全部样式
+	// （首页达 605KB），移动端解析成本反而推高 TBT。外链可跨页/跨次访问复用缓存。
 
 	// 字体配置 - 只加载实际使用的字体，跳过未引用的以加快构建
 	fonts: (() => {
