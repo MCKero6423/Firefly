@@ -155,7 +155,9 @@ export const fontConfig: FontSelectionConfig = {
 	// 主页横幅主标题字体
 	bannerTitleFont: "--font-zen-maru-gothic",
 	// 主页横幅副标题字体
-	bannerSubtitleFont: "--font-inter",
+	// 留空：副标题以中文为主，指定纯拉丁字体（Inter）只会渲染出其中的英文部分，
+	// 却要多下载 ~24KB 字体文件；留空则跟随正文字体，中文显示更统一。
+	bannerSubtitleFont: "",
 	// 导航栏标题字体
 	navbarTitleFont: "",
 	// 代码块字体（用于代码高亮和等宽字体场景）
