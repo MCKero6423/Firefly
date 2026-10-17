@@ -97,3 +97,27 @@
 .cb-modal a {
   color: var(--cb-accent);
 }
+
+/* ── 3) 移动端无壁纸图时的 CSS 渐变背景 ──────────────────────────────────
+   移动端不加载壁纸图片（省掉 ~67KB 的 LCP 资源），改用纯 CSS 渐变保持视觉层次。
+   桌面端不受影响（≥1024px 仍用真实壁纸）。 */
+@media (max-width: 1023px) {
+  /* 壁纸容器本身补齐渐变，避免移动端出现一块纯色空区 */
+  #wallpaper-wrapper {
+    background-image: linear-gradient(
+      160deg,
+      color-mix(in oklch, var(--primary) 26%, var(--page-bg)) 0%,
+      color-mix(in oklch, var(--primary) 12%, var(--page-bg)) 45%,
+      var(--page-bg) 100%
+    );
+  }
+  /* 页面整体也铺一层极淡的渐变，让首屏不至于完全平 */
+  body {
+    background-image: linear-gradient(
+      180deg,
+      color-mix(in oklch, var(--primary) 7%, var(--page-bg)) 0%,
+      var(--page-bg) 60vh
+    );
+    background-repeat: no-repeat;
+  }
+}
