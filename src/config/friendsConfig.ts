@@ -114,6 +114,16 @@ export const friendsConfig: FriendLink[] = [
 		weight: 11,
 		enabled: true,
 	},
+		{
+		title: "santisify site",
+		imgurl:
+			"https://cn.cravatar.com/avatar/737CF21C04FCD75BADF35BE0A797DE8A?s=200",
+		desc: "to simplify technology to its purest, most powerful form.",
+		siteurl: "https://santisify.top/",
+		tags: ["Blog"],
+		weight: 11,
+		enabled: true,
+	},
 ];
 
 // 获取启用的友链并进行排序
